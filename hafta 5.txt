@@ -1,0 +1,98 @@
+create database bakkal;
+go
+use bakkal;
+go
+create table urun(
+urun_id int primary key,
+kategori_id int,
+kategori_adi nchar,
+firma_id int,
+urun_adi nchar,
+alis_fiyati int,
+satis_fiyati int,
+stok_id int,
+tedarikci_id int,
+tedarikci_adi nchar);
+
+create table musteri(
+musteri_id int primary key,
+musteri_adi nchar,
+musteri_soyadi nchar,
+telefon int);
+
+create table tedarikci(
+tedarikci_id int primary key,
+tedarikci_adi nchar,
+telefon int,
+adres nchar);
+
+create table kategori(
+kategori_id int primary key,
+kategori_adi nchar);
+
+create table firmalar(
+firma_id int primary key,
+firma_adi nchar,
+telefon int,
+adres nchar);
+
+create table satis(
+satis_id int primary key,
+musteri_id int,
+tarih datetime);
+
+create table stok_takibi(
+stok_id int primary key,
+urun_id int,
+mevcut_stok int,
+son_durum_stok int);
+
+create table satis_detayi(
+satis_id int primary key,
+urun_adi nchar,
+adet int,
+tarih datetime);
+
+INSERT INTO kategori (kategori_id,kategori_adi)
+VALUES (1,'icecekler'),(2,'temel gida'),(3,'detarjanlar'),(4,'ekmekler'), (5,'çaylar');
+
+INSERT INTO firmalar(firma_id,firma_adi)
+VALUES(10,'abc'),(11,'abcd'),(12,'abcde'),(13,'abcdef'),(14,'abcdefg');
+
+INSERT INTO musteri(musteri_id,musteri_adi,musteri_soyadi)
+VALUES(123,'deniz','kaya'),(124,'leyla','demir'),(125,'ahmet','özturk'),(126,'demir','solmaz'),(127,'anıl','saygı');
+
+INSERT INTO tedarikci(tedarikci_id,tedarikci_adi)
+VALUES(110,'sucu'),(111,'ekmekci'),(112,'meyveci'),(113,'sebzeci'),(114,'detarjancı');
+
+INSERT INTO satis_detayi(satis_id,urun_adi,tarih,adet)
+VALUES(100, 'süt', '10-10-2025',5),(101, 'yoğurt', '11-11-2024',4),(102, 'ekmek', '04-04-2025',60),(103, 'mandalina', '15-05-2025',100),(104, 'domates', '10-06-2025',55);
+
+INSERT INTO stok_takibi (stok_id,mevcut_stok,son_durum_stok)
+VALUES (100,200,98),(101,300,150),(102,100,55),(103,50,15),(104,150,100);
+
+INSERT INTO urun(urun_id,urun_adi,alis_fiyati,satis_fiyati)
+VALUES(40,'süt',10,15),(41,'yogurt',20,25),(42,'ekmek',5,10),(43,'mandalina',20,30),(44,'domates',25,40);
+
+INSERT INTO satis(musteri_id,satis_id,tarih)
+VALUES(123,100,'10-10-2025'),(124,101,'11-11-2024'),(125,102,'04-04-2025'),(126,103,'15-05-2025'),(127,104,'10-06-2025');
+
+
+DELETE FROM musteri 
+WHERE musteri_id = 123;
+DELETE FROM musteri 
+WHERE musteri_id = 124;
+DELETE FROM musteri 
+WHERE musteri_id = 125;
+
+DELETE FROM kategori
+WHERE kategori_adi = 'çaylar';
+DELETE FROM kategori
+WHERE kategori_adi = 'ekmekler';
+
+DELETE FROM urun
+WHERE urun_adi ='domates';
+
+UPDATE tedarikci 
+SET adres = 'İstanbul'
+WHERE tedarikci_id = 111;
